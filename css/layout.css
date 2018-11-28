@@ -1,0 +1,673 @@
+@font-face{
+  font-family: Digiface_Regular;
+  src: url('../font/Digiface_Regular.TTF');
+}
+
+@font-face{
+  font-family: Trends;
+  src: url('../font/Trends.TTF');
+}
+
+html, body {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+
+.layui-fluid-new {
+	height: 100%;
+	padding: 0;
+}
+
+.map-box {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 450;
+	background: url(../images/map.png) center center no-repeat;
+	background-size: 100% 100%;
+}
+
+.nav-bg {
+	position: absolute;
+	width: 100%;
+	height: 102px;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	background: url(../images/nav/logo.png) center center no-repeat;
+	background-size: auto 102px;
+}
+
+.nav-top, .nav-bottom {
+	position: relative;
+	height: 52px;
+	padding: 0 15px;
+}
+
+.nav-bottom {
+	height: 44px;
+	/*overflow: hidden;*/
+}
+
+.time-box {
+	float: left;
+	margin-top: 29px;
+	height: 12px;
+	line-height: 12px;
+	font-size: 12px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
+	color: #89bcff;
+}
+
+.user {
+	float: right;
+	height: 20px;
+	line-height: 20px;
+	font-size: 14px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
+	color: #a1caff;
+	overflow: hidden;
+	margin-top: 25px;
+}
+
+.user > div {
+	float: left;
+	line-height: 20px;
+}
+
+.user-avatar {
+	height: 20px;
+	width: 20px;
+	background-color: #fff;
+	margin-right: 8px;
+}
+
+.search-box {
+	float: left;
+	width: calc(50% - 191px);
+	height: 100%;
+	position: relative;
+}
+
+.tab-box {
+	position: absolute;
+	top: 15px;
+	left: 50%;
+	transform: translateX(-50%);
+	min-width: 267px;
+	height: 18px;
+	overflow: hidden;
+}
+
+.tab-box > div {
+	width: 89px;
+	height: 100%;
+	float: left;
+	cursor: pointer;
+/* cxm修改-start */
+	position: relative;
+}
+
+/*.map-show {
+	background: url(../images/nav/map-show.png) center center no-repeat;
+	background-size: auto;
+}
+
+.intercept {
+	background: url(../images/nav/intercept.png) center center no-repeat;
+	background-size: auto;
+}
+
+.police {
+	background: url(../images/nav/police.png) center center no-repeat;
+	background-size: auto;
+}
+
+.map-show.active {
+	background: url(../images/nav/map-show-focas.png) center center no-repeat;
+	background-size: auto;
+}
+
+.intercept.active {
+	background: url(../images/nav/intercept-focas.png) center center no-repeat;
+	background-size: auto;
+}
+
+.police.active {
+	background: url(../images/nav/police-focas.png) center center no-repeat;
+	background-size: auto;
+}*/
+
+.focas-box > div {
+	float: left;
+}
+
+.tab-focas {
+	display: none;
+	width: 14px;
+	height: 14px;
+	margin-top: 2px;
+	margin-right: 3px;
+	background: url(../images/nav/focas.png) center center no-repeat;
+	background-size: auto;
+}
+
+.focas-box {
+	position: absolute;
+	height:18px;
+	line-height: 18px;
+	font-family: Trends;
+	font-size: 14px;
+	letter-spacing: 0px;
+	color: #a1caff;
+	left: 50%;
+	transform: translateX(-50%);
+	white-space: nowrap;
+}
+
+.tab-box .active .tab-focas {
+	display: block;
+}
+
+.tab-box .active .focas-box {
+	width: 100%;
+	font-size: 18px;
+	color: #ffd200;
+}
+/* cxm修改-end */
+
+.checkbox-items {
+	float: right;
+	width: calc(50% - 191px);
+	height: 100%;
+}
+
+.checkbox-items > div {
+	height: 44px;
+	line-height: 44px;
+	margin: 0;
+	position: absolute;
+	right: 0;
+}
+
+.layui-form-checkbox span {
+	font-size: 12px;
+}
+
+.layui-form-checkbox[lay-skin=primary] {
+	padding-left: 18px;
+}
+
+.layui-form-checkbox[lay-skin=primary] span {
+	color: #363a40;
+}
+
+.layui-form-checkbox[lay-skin=primary] i {
+	width: 12px;
+	height: 12px;
+	line-height: 12px;
+	top: 2px;
+	border: 1px solid #b1b6bc;
+  border-radius: 3px;
+  background-color: #e8ecf1;
+  color: #e8ecf1;
+}
+
+.layui-form-checkbox[lay-skin=primary]:hover i {
+	border-color: #d8b200;
+	color: #e8ecf1;
+}
+
+.layui-form-checked[lay-skin=primary] i {
+	border-color: #d8b200;
+  background-color: #ffd200;
+  color: #7e5c00;
+}
+
+.layui-form-checked[lay-skin=primary]:hover i {
+	color: #7e5c00;
+}
+
+.layui-input {
+	height: 28px;
+	margin-top: 8px;
+	font-size: 12px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
+	/*color: #cbd0d7;*/
+}
+
+.search-box .layui-form-item {
+	/*width: calc(100% - 130px);*/
+	width: 303px;
+}
+
+.layui-form-select .layui-edge {
+	border-top-color: #6c84a6;
+}
+
+.layui-form-select dl {
+	top: 32px;
+}
+
+.layui-input-block {
+	margin: 0;
+}
+
+.nav-bottom > form {
+	height: 100%;
+}
+
+.layui-btn-new {
+	width: 120px;
+	height: 28px;
+	line-height: 28px;
+	background-color: #ffd200;
+	border-radius: 3px;
+	border: solid 1px #d8b200;
+	font-size: 12px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
+	color: #7e5c00;
+	padding: 0;
+	position: absolute;
+	/*right: 0;*/
+	left: 313px;
+	top: 8px;
+}
+
+.layui-btn-new:hover {
+	color: #7e5c00;
+}
+
+.layui-form-select dl dd.layui-this {
+	background-color: #3364a7;
+}
+
+/*bobliu开始*/
+.amap-info-content{
+	background: #fff;
+	border:1px solid #ccc;
+	padding: 0;
+	line-height: 1.4;
+	overflow: hidden;
+}
+.amap-info-outer{
+	padding: 0;
+	text-align: left;
+	box-shadow: none;
+}
+
+.policeSituationPop{
+	height: 238px;
+	width: 433px;
+	background-image: linear-gradient(90deg,#528ad7 0%,#3870bb 100%);
+}
+.policeSituationPopContent{
+	position: absolute;
+	top: 17px;
+	left: 17px;
+	height:204px;
+	width: 399px;
+}
+.policeSituationPopContent .left{
+	float: left;
+}
+.policeSituationPopContent .right{
+	float: right;
+}
+
+.policeSituationPopContent .title{
+	height: 23px;
+	width: 100%;
+}
+.policeSituationPopContent .situationBrief{
+	height: 23px;
+	font-size: 16px;
+	font-weight: normal;
+	font-stretch: normal;
+	color: #ffd200;
+	width: 270px;
+}
+.policeSituationPopContent .situationTime{
+	height: 23px;
+	font-size: 12px;
+	font-weight: normal;
+	font-stretch: normal;
+	color: #ffffff;
+	width:129px;
+	line-height: 23px;
+}
+.policeSituationPopContent .accident{
+	height: 25px;
+	width: 100%;
+}
+
+.policeSituationPopContent .accidentPlaceTitle{
+	height: 13px;
+	margin-top: 8px;
+	margin-bottom: 4px;
+	line-height: 13px;
+	color: #89bcff;
+	font-size: 12px;
+	margin-right: 5px;
+}
+.policeSituationPopContent .accidentPlace{
+	height: 13px;
+	margin-top: 8px;
+	margin-bottom: 4px;
+	line-height: 13px;
+	color: #FFF;
+	font-size: 12px;
+}
+.policeSituationPopContent .detailCard{
+	margin-top: 4px;
+	border-radius: 5px;
+	width: 100%;
+	background-color: #FFFFFF;
+}
+
+.policeSituationPopContent .row{
+	width: 394px;
+	margin-left: 2px;
+	height: 35px;
+	border-bottom: dashed 3px #edf1f5;
+
+}
+.width-197{
+	width: 197px;
+}
+.policeSituationPopContent .contentType{
+	width: 60px;
+	font-size: 12px;
+	font-weight: normal;
+	font-stretch: normal;
+	color:#7d7f83;
+	padding-top: 10px;
+}
+
+.policeSituationPopContent .contentDetail{
+	font-size: 12px;
+	width:calc(100% - 65px);
+	padding-left: 5px;
+	padding-top: 10px;
+}
+.textNoWrap {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+/*bobliu结束*/
+
+/*陈雪梅新增-start*/
+.map-content {
+	position: absolute;
+	z-index: 499;
+	top: 107px;
+	/*cxm-start*/
+	left: 13px;
+	width: 362px;
+	height: calc(100% - 140px);
+	/*cxm-end*/
+	/*overflow: hidden;*/
+}
+
+.map-content > div {
+	float: left;
+}
+
+.sidebar-bg {
+	width: 30px;
+	height: 572px;
+	background: url(../images/sidebar/bg.png) top right no-repeat;
+	background-size: 28px 572px;
+}
+
+.sidebar-bg > div {
+	width: 30px;
+	height: 98px;
+	position: relative;
+	cursor: pointer;
+}
+
+.sidebar-content {
+	width: 332px;
+	/*cxm-start*/
+	height: 100%;
+	/*cxm-end*/
+	background-color: #fff;
+	box-shadow: 0px 2px 4px 0px 
+		rgba(63, 120, 183, 0.25);
+}
+
+.bg-first {
+	background: url(../images/sidebar/bg-first.png) center right no-repeat;
+	background-size: 28px 98px;
+}
+
+.bg-first.active {
+	background: url(../images/sidebar/bg-first-hover.png) center center no-repeat;
+	background-size: 30px 98px;
+}
+
+.bg-normal {
+	background: url(../images/sidebar/bg-center.png) center right no-repeat;
+	background-size: 28px 98px;
+}
+
+.bg-normal.active {
+	background: url(../images/sidebar/bg-center-hover.png) center center no-repeat;
+	background-size: 30px 98px;
+}
+
+.bg-normal:nth-child(2) {
+	top: -4px;
+}
+
+.bg-normal:nth-child(3) {
+	top: -8px;
+}
+
+.bg-normal:nth-child(4) {
+	top: -12px;
+}
+
+.bg-normal:nth-child(5) {
+	top: -16px;
+}
+
+.bg-normal:nth-child(6) {
+	top: -20px;
+}
+
+.bg-first > div, .bg-normal > div {
+	width: 12px;
+	font-size: 12px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 2px;
+	color: #a1caff;
+	position: absolute;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.bg-first.active > div, .bg-normal.active > div {
+	width: 14px;
+	font-size: 14px;
+	font-weight: bold;
+	letter-spacing: 3px;
+	color: #7e5c00;
+	left: 8px;
+}
+
+.sidebar-search {
+	height: 58px;
+	background-color: #ebeef2;
+	overflow: hidden;
+	padding: 2px 15px 0px 10px;
+}
+
+.search-result {
+	height: calc(100% - 58px);
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+.search-result > div {
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+	padding-bottom: 50px;
+	box-sizing: border-box;
+}
+
+.page-box {
+	height: 100%;
+	overflow: hidden;
+}
+
+.page {
+	width: 100%;
+  height: 50px;
+  background: #fff;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.layadmin-search-icon {
+  position: absolute;
+  left: 1px;
+  top: 1px;
+  width: 38px;
+  line-height: 36px;
+  text-align: center;
+  color: #d2d2d2;
+}
+
+.layadmin-search-body .layui-form-item .layui-input {
+  padding-left: 38px;
+  height: 38px;
+  font-size: 14px;
+}
+
+.layadmin-search-body .layui-form-item {
+  position: relative;
+}
+
+.rerult-item {
+	overflow: hidden;
+	padding: 0 15px;
+	height: 75px;
+}
+
+.rerult-item > div > div {
+	float: left;
+	height: 100%;
+	position: relative;
+}
+
+.item-border {
+	height: 100%;
+	border-bottom: 1px solid #edf1f5;
+	box-sizing: border-box;
+}
+
+.item-number {
+	width: 19px;
+}
+
+.item-number > div {
+	width: 19px;
+	height: 19px;
+	line-height: 19px;
+	text-align: center;
+	background-color: #5a84be;
+	border: solid 1px #7790b4;
+	border-radius: 50%;
+	font-size: 12px;
+	letter-spacing: 0px;
+	color: #ffffff;
+	box-sizing: border-box;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.item-info {
+	width: calc(100% - 19px);
+	padding-left: 10px;
+	box-sizing: border-box;
+}
+
+.item-info > div {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.item-info .item-name {
+	font-size: 14px;
+	letter-spacing: 0px;
+	color: #363a40;
+	margin-bottom: 5px;
+}
+
+.item-info .item-location {
+	font-size: 12px;
+	font-weight: normal;
+	letter-spacing: 0px;
+	color: #363a40;
+}
+
+.item-info .item-location span {
+	color: #7d7f83;
+}
+
+@media screen and (min-width:1280px) and (max-width:1400px){
+	.sidebar-bg {
+		height: 526px;
+		background: url(../images/sidebar/bg.png) top right no-repeat;
+		background-size: 28px 526px;
+	}
+
+	.sidebar-bg > div {
+    height: 90px;
+	}
+
+	.bg-first {
+    background: url(../images/sidebar/bg-first.png) center right no-repeat;
+    background-size: 28px 90px;
+	}
+
+	.bg-first.active {
+    background: url(../images/sidebar/bg-first-hover.png) center center no-repeat;
+    background-size: 30px 90px;
+  }
+
+  .bg-normal {
+    background: url(../images/sidebar/bg-center.png) center right no-repeat;
+    background-size: 28px 90px;
+	}
+
+	.bg-normal.active {
+    background: url(../images/sidebar/bg-center-hover.png) center center no-repeat;
+    background-size: 30px 90px;
+  }
+}
+/*陈雪梅新增-end*/

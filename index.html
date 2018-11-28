@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>诸暨市封控拦截指挥系统</title>
+	<link rel="stylesheet" type="text/css" href="./layui/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="css/layout.css">
+	<link rel="stylesheet" href="css/left.css">
+	<script src="https://webapi.amap.com/maps?v=1.4.10&key=45f51139f1726b88d0844b28cf4e7d95"></script>
+	<script src="https://webapi.amap.com/ui/1.0/main.js"></script>
+</head>
+
+<body>
+	<div class="layui-fluid layui-fluid-new">
+		<div class="map-box" id="mapContainer"></div>
+		<div class="nav-bg">
+			<div class="nav-top">
+				<div id="time_box" class="time-box"></div>
+				<div class="user">
+					<div class="layui-circle user-avatar"></div>
+					<div>管理员</div>
+				</div>
+			</div>
+			<div class="nav-bottom">
+				<form class="layui-form" action="" lay-filter="search-form">
+					<div class="search-box" style="display: none;">
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<select name="interest" lay-filter="aihao">
+									<option value="">选择突发事件</option>
+									<option value="0">写作</option>
+									<option value="1">阅读</option>
+									<option value="2">游戏</option>
+									<option value="3">音乐</option>
+									<option value="4">旅行</option>
+								</select>
+							</div>
+						</div>
+						<button class="layui-btn layui-btn-new" lay-submit="" lay-filter="" id="layui-chooseAccident">地图选择突发事件</button>
+					</div>
+					<!-- cxm调整-start -->
+					<div class="tab-box">
+						<div class="active">
+							<div class="focas-box">
+								<div class="tab-focas"></div>
+								<div>地图展示</div>
+							</div>
+						</div>
+						<div class="">
+							<div class="focas-box">
+								<div class="tab-focas"></div>
+								<div>指挥拦截</div>
+							</div>
+						</div>
+						<div class="">
+							<div class="focas-box">
+								<div class="tab-focas"></div>
+								<div>警力调度</div>
+							</div>
+						</div>
+					</div>
+					<!-- cxm调整-end -->
+					<div class="checkbox-items">
+						<div class="layui-input-block">
+							<input type="checkbox" name="" lay-skin="primary" title="固定卡点">
+							<input type="checkbox" name="" lay-skin="primary" title="卡口系统">
+							<input type="checkbox" name="" lay-skin="primary" title="治安监控">
+							<input type="checkbox" name="" lay-skin="primary" title="警力">
+							<input type="checkbox" name="" lay-skin="primary" title="巡处车辆">
+							<input type="checkbox" name="" lay-skin="primary" title="警情">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- 陈雪梅新增-start -->
+		<div class="map-content">
+			<div class="sidebar-bg">
+				<div class="bg-first active">
+					<div>固定卡点</div>
+				</div>
+				<div class="bg-normal">
+					<div>卡口系统</div>
+				</div>
+				<div class="bg-normal">
+					<div>治安监控</div>
+				</div>
+				<div class="bg-normal">
+					<div>防控警力</div>
+				</div>
+				<div class="bg-normal">
+					<div>巡处车辆</div>
+				</div>
+				<div class="bg-normal">
+					<div>警情</div>
+				</div>
+			</div>
+			<div class="sidebar-content">
+				<div class="sidebar-search">
+					<form class="layadmin-search-body layui-form" action="" lay-filter="search-form-input">
+						<div class="layui-form-item">
+							<label class="layadmin-search-icon layui-icon layui-icon-search" for="LAY-search-info"></label>
+							<input type="text" name="cellphone" id="LAY-search-info" lay-verify="phone" placeholder="输入相关信息搜索" class="layui-input">
+						</div>
+					</form>
+				</div>
+				<div class="search-result">
+					<div>
+						<div id="gdkd_box" class="page-box">
+							<!-- <div class="rerult-item">
+								<div class="item-border">
+									<div class="item-number">
+										<div>1</div>
+									</div>
+									<div class="item-info">
+										<div>
+											<div class="item-name">治安监控1</div>
+											<div class="item-location layui-elip"><span>位置：</span>东三路345号东都·凤凰城小区南门</div>
+										</div>
+									</div>
+								</div>
+							</div> -->
+						</div>
+						<div class="page">
+							<div id="gdkd"></div>
+						</div>
+					</div>
+					<div style="display: none;">
+						<div id="kkxt_box" class="page-box">
+
+						</div>
+						<div class="page">
+							<div id="kkxt"></div>
+						</div>
+					</div>
+					<div style="display: none;">
+						<div id="zajk_box" class="page-box">
+
+						</div>
+						<div class="page">
+							<div id="zajk"></div>
+						</div>
+					</div>
+					<div style="display: none;">
+						<div id="fkjl_box" class="page-box">
+
+						</div>
+						<div class="page">
+							<div id="fkjl"></div>
+						</div>
+					</div>
+					<div style="display: none;">
+						<div id="xccl_box" class="page-box">
+
+						</div>
+						<div class="page">
+							<div id="xccl"></div>
+						</div>
+					</div>
+					<div style="display: none;">
+						<div id="jq_box" class="page-box">
+
+						</div>
+						<div class="page">
+							<div id="jq"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 陈雪梅新增-end -->
+		<!-- zk 指挥拦截start -->
+		<div class="left_box left_box_one" style='display: none;'>
+			<div class="layui-tab big-tab" lay-filter="big-tab" id='big-tab'>
+				<ul class="layui-tab-title">
+					<li class="layui-this" id="video-monitor-tab"><img src='images/video.png' />视频监控</li>
+					<li id="crossing-intercept-tab"><img src='images/route-hover.png' />路口设卡</li>
+				</ul>
+				<div class="layui-tab-content Z_sh">
+					<div class="layui-tab-item layui-show">
+						<div class="left_show_box">
+							<div class="show_title">
+								<span>突发事件1</span>
+								<div><i class="layui-icon">&#xe715;</i>环城北路农副产品市场</div>
+							</div>
+							<p>距离事故发生已过去</p>
+							<div class='time-box'>
+								<div class="time-small">
+									<div class="hours-box">
+										00
+									</div><span>时</span>
+								</div>
+								<div class="time-small">
+									<div class="minutes-box">
+										00
+									</div><span>分</span>
+								</div>
+								<div class="time-small">
+									<div class="seconds-box">
+										00
+									</div><span>秒</span>
+								</div>
+							</div>
+						</div>
+						<div class="monitor_list_box">
+							<div class="layui-tab layui-tab-brief small-tab" lay-filter="docDemoTabBrief">
+								<ul class="layui-tab-title">
+									<li class="layui-this">驾车<div class='borders-line'></div>
+									</li>
+									<li>公交<div class='borders-line'></div>
+									</li>
+									<li>步行<div class='borders-line'></div>
+									</li>
+									<li>骑行<div class='borders-line'></div>
+									</li>
+								</ul>
+								<div class="layui-tab-content">
+									<div class="layui-tab-item layui-show">
+										<div class="unfold-box" style="display:block">
+											<div class="left">根据事件点智能规划出<span>5</span>条驾车出逃路线</div>
+											<div class="right shrinkBtn"><span>收缩</span><i class="layui-icon">&#xe619;</i></div>
+										</div>
+										<div class="unfold-cons-box video-list" style="display:block">
+											<div class="unfold-cons">
+												<div class="num">1</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title" title='出逃至×××出口'>出逃至×××出口</div>
+														<button class='monitorBtn'>查看监控</button>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>时长:</span>
+															<b>1h3min</b>
+														</div>
+														<div class="routes">
+															<span>路途:</span>
+															<b>55公里·S24高速</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">2</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title" title='出逃至×××出口'>出逃至×××出口</div>
+														<button class='monitorBtn'>查看监控</button>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>时长:</span>
+															<b>1h3min</b>
+														</div>
+														<div class="routes">
+															<span>路途:</span>
+															<b>55公里·S24高速</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">3</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title" title='出逃至×××出口'>出逃至×××出口</div>
+														<button class='monitorBtn'>查看监控</button>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>时长:</span>
+															<b>1h3min</b>
+														</div>
+														<div class="routes">
+															<span>路途:</span>
+															<b>55公里·S24高速</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">4</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title" title='出逃至×××出口'>出逃至×××出口</div>
+														<button class='monitorBtn'>查看监控</button>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>时长:</span>
+															<b>1h3min</b>
+														</div>
+														<div class="routes">
+															<span>路途:</span>
+															<b>55公里·S24高速</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">5</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title" title='出逃至×××出口'>出逃至×××出口</div>
+														<button class='monitorBtn'>查看监控</button>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>时长:</span>
+															<b>1h3min</b>
+														</div>
+														<div class="routes">
+															<span>路途:</span>
+															<b>55公里·S24高速</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">6</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title" title='出逃至×××出口'>出逃至×××出口</div>
+														<button class='monitorBtn'>查看监控</button>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>时长:</span>
+															<b>1h3min</b>
+														</div>
+														<div class="routes">
+															<span>路途:</span>
+															<b>55公里·S24高速</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">7</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title" title='出逃至×××出口'>出逃至×××出口</div>
+														<button class='monitorBtn'>查看监控</button>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>时长:</span>
+															<b>1h3min</b>
+														</div>
+														<div class="routes">
+															<span>路途:</span>
+															<b>55公里·S24高速</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">8</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title" title='出逃至×××出口'>出逃至×××出口</div>
+														<button class='monitorBtn'>查看监控</button>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>时长:</span>
+															<b>1h3min</b>
+														</div>
+														<div class="routes">
+															<span>路途:</span>
+															<b>55公里·S24高速</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">9</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title" title='出逃至×××出口'>出逃至×××出口</div>
+														<button class='monitorBtn'>查看监控</button>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>时长:</span>
+															<b>1h3min</b>
+														</div>
+														<div class="routes">
+															<span>路途:</span>
+															<b>55公里·S24高速</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">10</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title" title='出逃至×××出口'>出逃至×××出口</div>
+														<button class='monitorBtn'>查看监控</button>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>时长:</span>
+															<b>1h3min</b>
+														</div>
+														<div class="routes">
+															<span>路途:</span>
+															<b>55公里·S24高速</b>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="Z_unfold-box" style="display:none">
+											<div class='backBtn'><i class="layui-icon">&#xe603;</i> </div>
+											<span>出逃至×××市级固定卡点监控</span>
+											<button class="more-video-btn">多屏监控</button>
+										</div>
+										<div class="Z_unfold-cons-box" style="display:none">
+											<div class="unfold-cons" vhref='rtmp://183.131.146.125:1935/service/PuId-ChannelNo=123705000100000180-01&PlayMethod=0&StreamingType=0&name=12370500010000018001'>
+												<div class="num">1</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title">监控点1.0</div>
+														<div class="cons">距事发点<span class='nums'>162</span><span>m</span></div>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>监控类型:</span>
+															<b>卡口系统</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons" vhref='rtmp://183.131.146.125:1935/service/PuId-ChannelNo=123705000100000180-01&PlayMethod=0&StreamingType=0&name=12370500010000018001'>
+												<div class="num">2</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title">监控点2.0</div>
+														<div class="cons">距事发点<span class='nums'>253</span><span>m</span></div>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>监控类型:</span>
+															<b>卡口系统</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons" vhref='rtmp://183.131.146.125:1935/service/PuId-ChannelNo=123705000100000180-01&PlayMethod=0&StreamingType=0&name=12370500010000018001'>
+												<div class="num">3</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title">监控点3.0</div>
+														<div class="cons">距事发点<span class='nums'>342</span><span>m</span></div>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>监控类型:</span>
+															<b>卡口系统</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons" vhref='rtmp://183.131.146.125:1935/service/PuId-ChannelNo=123705000100000180-01&PlayMethod=0&StreamingType=0&name=12370500010000018001'>
+												<div class="num">4</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title">监控点4.0</div>
+														<div class="cons">距事发点<span class='nums'>412</span><span>m</span></div>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>监控类型:</span>
+															<b>卡口系统</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">5</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title">监控点5.0</div>
+														<div class="cons">距事发点<span class='nums'>321</span><span>m</span></div>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>监控类型:</span>
+															<b>卡口系统</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">6</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title">监控点6.0</div>
+														<div class="cons">距事发点<span class='nums'>321</span><span>m</span></div>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>监控类型:</span>
+															<b>卡口系统</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">7</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title">监控点7.0</div>
+														<div class="cons">距事发点<span class='nums'>321</span><span>m</span></div>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>监控类型:</span>
+															<b>卡口系统</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">8</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title">监控点8.0</div>
+														<div class="cons">距事发点<span class='nums'>321</span><span>m</span></div>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>监控类型:</span>
+															<b>卡口系统</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">9</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title">监控点9.0</div>
+														<div class="cons">距事发点<span class='nums'>321</span><span>m</span></div>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>监控类型:</span>
+															<b>卡口系统</b>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="unfold-cons">
+												<div class="num">10</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title">监控点10.0</div>
+														<div class="cons">距事发点<span class='nums'>321</span><span>m</span></div>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>监控类型:</span>
+															<b>卡口系统</b>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="layui-tab-item">公交</div>
+									<div class="layui-tab-item">步行</div>
+									<div class="layui-tab-item">骑行</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-tab-item">
+						<!-- 路口设卡 -->
+						<div class="left_show_box">
+							<div class="show_title">
+								<span>突发事件1</span>
+								<div><i class="layui-icon">&#xe715;</i>环城北路农副产品市场</div>
+							</div>
+							<p>距离事故发生已过去</p>
+							<div class='time-box'>
+								<div class="time-small">
+									<div class="hours-box">
+										00
+									</div><span>时</span>
+								</div>
+								<div class="time-small">
+									<div class="minutes-box">
+										00
+									</div><span>分</span>
+								</div>
+								<div class="time-small">
+									<div class="seconds-box">
+										00
+									</div><span>秒</span>
+								</div>
+							</div>
+						</div>
+						<div class="Z_time_line">
+							<h1>路口设卡分析</h1>
+							<div class="line-bg">
+								<div class="three-box"></div>
+								<div class="five-box"></div>
+								<div class="fivteen-box"></div>
+							</div>
+							<div class="time-bg">
+								<span>起始时间</span>
+								<span class='three-mins'>3min</span>
+								<span class='five-mins'>5min</span>
+								<span class='fivteen-mins'>15min</span>
+							</div>
+						</div>
+						<div class="unfold-box Z_unfold-box1" style="display:block">
+							<div class="left">0-<b class='mins-box'>3</b>min行程范围共有<span>5</span>个路口</div>
+							<div class="right shrinkBtn"><span>收缩</span><i class="layui-icon">&#xe619;</i></div>
+						</div>
+						<div class="Z_unfold-cons-box1" style="display:block">
+							<div class="unfold-cons">
+								<div class="num">1</div>
+								<div class="cons">
+									<div class="top-cons">
+										<div class="title" title='路口1'>路口1</div>
+										<div class="cons">距事发点<span class='nums'>587</span><span>m</span></div>
+									</div>
+									<div class="bot-cons">
+										<div class="hours">
+											<span>位置:</span>
+											<b>绍兴市诸暨市西施大街167号</b>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="unfold-cons">
+								<div class="num">2</div>
+								<div class="cons">
+									<div class="top-cons">
+										<div class="title" title='路口2'>路口2</div>
+										<div class="cons">距事发点<span class='nums'>587</span><span>m</span></div>
+									</div>
+									<div class="bot-cons">
+										<div class="hours">
+											<span>位置:</span>
+											<b>绍兴市诸暨市西施大街167号</b>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="unfold-cons">
+								<div class="num">3</div>
+								<div class="cons">
+									<div class="top-cons">
+										<div class="title" title='路口2'>路口2</div>
+										<div class="cons">距事发点<span class='nums'>587</span><span>m</span></div>
+									</div>
+									<div class="bot-cons">
+										<div class="hours">
+											<span>位置:</span>
+											<b>绍兴市诸暨市西施大街167号</b>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="unfold-cons">
+								<div class="num">4</div>
+								<div class="cons">
+									<div class="top-cons">
+										<div class="title" title='路口2'>路口2</div>
+										<div class="cons">距事发点<span class='nums'>587</span><span>m</span></div>
+									</div>
+									<div class="bot-cons">
+										<div class="hours">
+											<span>位置:</span>
+											<b>绍兴市诸暨市西施大街167号</b>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="unfold-cons">
+								<div class="num">5</div>
+								<div class="cons">
+									<div class="top-cons">
+										<div class="title" title='路口2'>路口2</div>
+										<div class="cons">距事发点<span class='nums'>587</span><span>m</span></div>
+									</div>
+									<div class="bot-cons">
+										<div class="hours">
+											<span>位置:</span>
+											<b>绍兴市诸暨市西施大街167号</b>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="unfold-cons">
+								<div class="num">6</div>
+								<div class="cons">
+									<div class="top-cons">
+										<div class="title" title='路口2'>路口2</div>
+										<div class="cons">距事发点<span class='nums'>587</span><span>m</span></div>
+									</div>
+									<div class="bot-cons">
+										<div class="hours">
+											<span>位置:</span>
+											<b>绍兴市诸暨市西施大街167号</b>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="unfold-cons">
+								<div class="num">7</div>
+								<div class="cons">
+									<div class="top-cons">
+										<div class="title" title='路口2'>路口2</div>
+										<div class="cons">距事发点<span class='nums'>587</span><span>m</span></div>
+									</div>
+									<div class="bot-cons">
+										<div class="hours">
+											<span>位置:</span>
+											<b>绍兴市诸暨市西施大街167号</b>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="unfold-cons">
+								<div class="num">8</div>
+								<div class="cons">
+									<div class="top-cons">
+										<div class="title" title='路口2'>路口2</div>
+										<div class="cons">距事发点<span class='nums'>587</span><span>m</span></div>
+									</div>
+									<div class="bot-cons">
+										<div class="hours">
+											<span>位置:</span>
+											<b>绍兴市诸暨市西施大街167号</b>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="unfold-cons">
+								<div class="num">9</div>
+								<div class="cons">
+									<div class="top-cons">
+										<div class="title" title='路口2'>路口2</div>
+										<div class="cons">距事发点<span class='nums'>587</span><span>m</span></div>
+									</div>
+									<div class="bot-cons">
+										<div class="hours">
+											<span>位置:</span>
+											<b>绍兴市诸暨市西施大街167号</b>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="unfold-cons">
+								<div class="num">10</div>
+								<div class="cons">
+									<div class="top-cons">
+										<div class="title" title='路口2'>路口2</div>
+										<div class="cons">距事发点<span class='nums'>587</span><span>m</span></div>
+									</div>
+									<div class="bot-cons">
+										<div class="hours">
+											<span>位置:</span>
+											<b>绍兴市诸暨市西施大街167号</b>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- zk 指挥拦截end -->
+		<!-- zk警力调度start -->
+		<div class="left_box left_box_two" style='display: none;'>
+			<div class="layui-tab big-tab" lay-filter="bigs-tab">
+				<ul class="layui-tab-title">
+					<li class="layui-this"><img src='images/jldd.png' />警力调度</li>
+				</ul>
+				<div class="layui-tab-content">
+					<div class="layui-tab-item layui-show">
+						<div class="left_show_box jl_show_box">
+							<p>全市步巡警力数<span>全市车巡警力数</span></p>
+							<div class='time-box'>
+								<div class="time-small">
+									<div class="hours-box">
+										000
+									</div><span>人</span>
+								</div>
+								<div class="time-small">
+									<div class="minutes-box">
+										000
+									</div><span>辆</span>
+								</div>
+							</div>
+						</div>
+						<div class="Z_select_box">
+							<form class="layui-form" action="" lay-filter="search-form">
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<select name="range" lay-verify="" id='range-select' lay-filter='range-select'>
+											<option value="1">设置距离范围：1km</option>
+											<option value="2">设置距离范围：3km</option>
+											<option value="3">设置距离范围：5km</option>
+										</select>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="monitor_list_box Z_monitor_list_box">
+							<div class="layui-tab layui-tab-brief small-tab jl-small-tab" lay-filter="docDemoTabBrief">
+								<ul class="layui-tab-title">
+									<li class="layui-this"><span>步巡警力</span>
+										<div class='logos'>120</div>
+										<div class='borders-line'></div>
+									</li>
+									<li><span>车巡警力</span>
+										<div class='logos'>105</div>
+										<div class='borders-line'></div>
+									</li>
+								</ul>
+								<div class="layui-tab-content">
+									<div class="layui-tab-item layui-show">
+										<div class="unfold-cons-box" id="bxjl_box" style="display:block">
+											<!-- <div class="unfold-cons">
+												<div class="num">1</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title">张娜</div>
+														<span class='status'>巡逻中</span>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>电话:</span>
+															<b>15858638812</b>
+														</div>
+														<div class="routes">
+															<span>距离:</span>
+															<b>152<span>m<span></b>
+														</div>
+													</div>
+												</div>
+											</div> -->
+
+										</div>
+										<div class="laypageBox">
+											<div id="jlddPage"></div>
+										</div>
+									</div>
+									<div class="layui-tab-item">
+										<div class="unfold-cons-box" id="cxjl_box">
+											<!-- <div class="unfold-cons">
+												<div class="num">1</div>
+												<div class="cons">
+													<div class="top-cons">
+														<div class="title">张娜</div>
+														<span class='status'>巡逻中</span>
+													</div>
+													<div class="bot-cons">
+														<div class="hours">
+															<span>电话:</span>
+															<b>15858638812</b>
+														</div>
+														<div class="routes">
+															<span>距离:</span>
+															<b>152<span>m<span></b>
+														</div>
+													</div>
+												</div>
+											</div> -->
+
+										</div>
+										<div class="laypageBox">
+											<div id="cxjlPage"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- zk警力调度end -->
+		<!-- zk多屏监控固定框start -->
+		<div class='more-video-box'>
+			<div class="title-box">
+				<h1>多屏监控</h1>
+				<div id='video-close-btn'><i class="layui-icon">&#x1006;</i> </div>
+			</div>
+			<div class="monitor-box">
+				<div class="small-box">请选择视频</div>
+				<div class="small-box">请选择视频</div>
+				<div class="small-box">请选择视频</div>
+				<div class="small-box">请选择视频</div>
+				<div class="small-box">请选择视频</div>
+				<div class="small-box">请选择视频</div>
+				<div class="small-box">请选择视频</div>
+				<div class="small-box">请选择视频</div>
+				<div class="small-box">请选择视频</div>
+			</div>
+			<div class='operate-box'>
+				<h1 class='ld'>亮度</h1>
+				<div class='tlImg'><img src="images/video/brightness-down-d.png" alt=""></div>
+				<div class='taImg'><img src="images/video/brightness-up-d.png" alt=""></div>
+				<div class='line'></div>
+				<h1>大小</h1>
+				<div class='fdImg'><img src="images/video/zoom-in-disabled.png" alt=""></div>
+				<div class='sxImg'><img src="images/video/zoom-out-disabled.png" alt=""></div>
+			</div>
+			<div class="operate-bottom">
+				<span>视频画布布局</span>
+				<div class="oneBtn"></div>
+				<div class="fourBtn"></div>
+				<div class="sixBtn"></div>
+				<div class="nineBtn"></div>
+			</div>
+		</div>
+		<!-- zk多屏监控固定框end -->
+	</div>
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.nicescroll.min.js"></script>
+	<script src='./layui/layui.js'></script>
+	<script src="js/turf.min.js"></script>
+	<script type="text/javascript" src="./layui/layui.js"></script>
+	<script type="text/javascript" src="js/zhujiRegion.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/video.js"></script>
+	<script src='js/left_command.js'></script>
+	<script type="text/javascript" src="js/map.js"></script>
+</body>
+
+</html>
+
+</html>
